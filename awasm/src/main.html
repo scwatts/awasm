@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>itsmeyouwebasm</title>
+    <meta name="itsme" content="">
+    <meta name="itswebasm" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+
+  <body>
+    <script>
+      function download_assembly() {
+        // Blob
+        fh = FS.open('/IDBFS/velvet/contigs.fa', 'r');
+        blob = new Blob([fh.node.contents], {type: 'text/plain'});
+        FS.close(fh);
+        // Associate with element
+        link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'contigs.fa';
+        // Place element in HTML and simulate click
+        document.body.append(link);
+        link.click();
+        link.remove();
+      };
+    </script>
+    <input type="file" id="seq1" name="file" />
+    <input type="file" id="seq2" name="file" />
+    <input id="assemble" type="button" value="assemble" onclick="Module.ccall('run', 'number');" />
+    <input id="download" type="button" value="download" onclick="download_assembly();" />
+    <div style='display: block; padding-top: 50px;'>
+      <a>status:</a>
+      <a id="status">idle</a>
+    </div>
+    <script src="main.js"></script>
+  </body>
+
+</html>

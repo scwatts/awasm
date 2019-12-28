@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>awasm</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script src="%PUBLIC_URL%/main.js"></script>
+    <script>
+      // Data API for react
+      class DataAPI {
+        constructor(data) {
+          this.data = data;
+          this.listeners = [];
+        }
+
+        addListener(fn) {
+          this.listeners.push(fn);
+        }
+
+        update(data) {
+          this.data = data;
+          this.listeners.forEach(fn => fn());
+        }
+      }
+
+      // Lazy input validation - will integrate with react eventually
+      function execute_assembly() {
+        seq1_input = document.getElementById('seq1');
+        seq2_input = document.getElementById('seq2');
+        if (seq1_input.files.length != 1 || seq2_input.files.length != 1) {
+          window.alert('check inputs');
+        } else {
+          Module.ccall('run', 'number');
+        }
+      }
+
+      // Download assembly function
+      function download_assembly() {
+        // Blob
+        fh = FS.open('/IDBFS/velvet/contigs.fa', 'r');
+        blob = new Blob([fh.node.contents], {type: 'text/plain'});
+        FS.close(fh);
+        // Associate with element
+        link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'contigs.fa';
+        // Place element in HTML and simulate click
+        document.body.append(link);
+        link.click();
+        link.remove();
+      };
+
+      // Init some important variables
+      Module.step_enum = {'input': 1, 'velveth': 2, 'velvetg': 3, 'complete': 4};
+      Module.step_api = new DataAPI(Module.step_enum.input);
+      Module.execution_api = new DataAPI(0);
+    </script>
+
+    <div id="root"></div>
+
+  </body>
+</html>

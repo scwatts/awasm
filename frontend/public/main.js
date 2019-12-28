@@ -1,0 +1,1 @@
+../../awasm/src/main.js
