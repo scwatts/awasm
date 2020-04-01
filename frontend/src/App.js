@@ -20,9 +20,14 @@ function App() {
           <Header size='huge' textAlign='center'>awasm</Header>
         </Grid.Row>
         <Grid.Row>
-          <Message positive>
-            <Message.Header>Welcome and take it easy, we're still pre-alpha</Message.Header>
-            <p>We have plenty of bugs from an alarming number of hacks but the frontend can almost be<br />considered functional and the webasm component usually works</p>
+          <Message positive style={{ maxWidth: '40em' }}>
+            <Message.Header>Welcome and take it easy</Message.Header>
+            <p>
+              This small webapp will take a set of gzip compressed paired reads and
+              assembles them locally on your computer or mobile device using a stripped
+              version of velvet compiled to webasm. This is a basic prototype and
+              things may go wrong!
+            </p>
           </Message>
         </Grid.Row>
         <Grid.Row>
