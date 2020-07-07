@@ -41,13 +41,13 @@
       // Download assembly function
       function download_assembly() {
         // Blob
-        fh = FS.open('/IDBFS/velvet/contigs.fa', 'r');
+        fh = FS.open('/IDBFS/velvet/LastGraph', 'r');
         blob = new Blob([fh.node.contents], {type: 'text/plain'});
         FS.close(fh);
         // Associate with element
         link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'contigs.fa';
+        link.download = 'assembly.gfa';
         // Place element in HTML and simulate click
         document.body.append(link);
         link.click();
